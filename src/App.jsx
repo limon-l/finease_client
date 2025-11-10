@@ -3,6 +3,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import AddTransaction from "./pages/AddTransaction";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
@@ -22,6 +23,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/add-transaction"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <AddTransaction />{" "}
               </ProtectedRoute>
             }
           />
