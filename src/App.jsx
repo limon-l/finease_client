@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import MyTransactions from "./pages/MyTransactions";
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
               <ProtectedRoute>
                 {" "}
                 <AddTransaction />{" "}
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-transactions"
+            element={
+              <ProtectedRoute>
+                <MyTransactions />
               </ProtectedRoute>
             }
           />
