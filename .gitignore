@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+src/firebase/firebase.config.js
+src/dataconnect-generated
+dataconnect
+functions
 
 # Editor directories and files
 .vscode/*
