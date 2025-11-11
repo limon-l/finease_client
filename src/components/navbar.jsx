@@ -13,7 +13,7 @@ export default function Navbar() {
   return (
     <nav className="bg-base-100 shadow-md px-4 py-2 flex justify-between items-center">
       <div className="flex items-center gap-2">
-        <img src="/logo192.png" alt="Logo" className="w-10 h-10" />
+        <img src="/public/logo.png" alt="Logo" className="w-10 h-10" />
         <h1 className="text-xl font-bold">FinEase</h1>
       </div>
 

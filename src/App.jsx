@@ -9,6 +9,9 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MyTransactions from "./pages/MyTransactions";
+import Reports from "./pages/Reports";
+import TransactionDetails from "./pages/TransactionDetails";
+import UpdateTransaction from "./pages/UpdateTransaction";
 
 function App() {
   return (
@@ -19,6 +22,31 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          <Route
+            path="/my-transactions"
+            element={
+              <ProtectedRoute>
+                <MyTransactions />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/add-transaction"
+            element={
+              <ProtectedRoute>
+                <AddTransaction />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute>
+                <Reports />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/profile"
             element={
@@ -28,22 +56,22 @@ function App() {
             }
           />
           <Route
-            path="/add-transaction"
+            path="/transaction/:id"
             element={
               <ProtectedRoute>
-                {" "}
-                <AddTransaction />{" "}
+                <TransactionDetails />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/my-transactions"
+            path="/transaction/update/:id"
             element={
               <ProtectedRoute>
-                <MyTransactions />
+                <UpdateTransaction />
               </ProtectedRoute>
             }
           />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
