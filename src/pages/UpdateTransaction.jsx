@@ -25,7 +25,7 @@ export default function UpdateTransaction() {
 
     const fetchTransaction = async () => {
       try {
-        const res = await axios.get(`http://localhost:5173/transactions/${id}`);
+        const res = await axios.get(`http://localhost:5000/transactions/${id}`);
         if (res.data.email !== user.email) {
           toast.error("You cannot edit this transaction.");
           navigate("/my-transactions");
@@ -60,7 +60,7 @@ export default function UpdateTransaction() {
     e.preventDefault();
     setSubmitLoading(true);
     try {
-      await axios.put(`http://localhost:5173/transactions/${id}`, formData);
+      await axios.put(`http://localhost:5000/transactions/${id}`, formData);
       toast.success("Transaction updated successfully!");
       navigate(`/transaction/${id}`);
     } catch (err) {
