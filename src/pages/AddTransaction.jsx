@@ -25,12 +25,12 @@ export default function AddTransaction() {
     e.preventDefault();
 
     if (!user) {
-      toast.error("You must be logged in to add a transaction.");
+      toast.error("🚫 You must be logged in to add a transaction.");
       return;
     }
 
     if (!formData.category || !formData.amount || !formData.date) {
-      toast.error("Please fill all required fields.");
+      toast.error("⚠️ Please fill all required fields.");
       return;
     }
 
@@ -49,8 +49,8 @@ export default function AddTransaction() {
         dataToSend
       );
 
-      if (res.data.insertedId) {
-        toast.success("Transaction added successfully!");
+      if (res.data.insertedId || res.data._id) {
+        toast.success("✅ Transaction added successfully!");
         setFormData({
           type: "income",
           category: "",
@@ -58,10 +58,12 @@ export default function AddTransaction() {
           description: "",
           date: "",
         });
+      } else {
+        toast.error("⚠️ Unexpected response. Please try again.");
       }
     } catch (err) {
-      toast.error("Failed to add transaction. Please try again.");
       console.error(err);
+      toast.error("❌ Failed to add transaction. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -69,10 +71,8 @@ export default function AddTransaction() {
 
   const inputClass =
     "input w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200";
-
   const textareaClass =
     "textarea w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200 resize-none";
-
   const selectClass =
     "select w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200";
 
