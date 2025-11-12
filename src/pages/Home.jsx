@@ -14,7 +14,7 @@ export default function Home() {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:5000/transactions?email=${user.email}`
+          `https://finease-server-hmpp.onrender.com/transactions?email=${user.email}`
         );
         const data = Array.isArray(res.data) ? res.data : [];
         setTransactions(data);
