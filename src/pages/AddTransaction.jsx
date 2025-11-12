@@ -45,7 +45,7 @@ export default function AddTransaction() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:5000/transactions",
+        "https://finease-server-hmpp.onrender.com/transactions",
         dataToSend
       );
 

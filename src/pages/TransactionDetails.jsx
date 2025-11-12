@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 
-const TransactionDetails = () => {
-  const { id } = useParams();
+const BASE_URL = "https://finease-server-hmpp.onrender.com";
+
+const TransactionDetails = ({ transactionId, userEmail }) => {
   const [transaction, setTransaction] = useState(null);
   const [categoryTotal, setCategoryTotal] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -12,81 +12,80 @@ const TransactionDetails = () => {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:5000/transactions/${id}`
-        );
-        setTransaction(data);
+        setLoading(true);
 
-        try {
-          const totalRes = await axios.get(
-            `http://localhost:5000/transactions/category-total`,
-            {
-              params: { email: data.email, category: data.category },
-            }
-          );
-          setCategoryTotal(totalRes.data.total || 0);
-        } catch (catErr) {
-          console.error("Error fetching category total:", catErr);
-          setCategoryTotal(0);
-        }
+        const transactionRes = await axios.get(
+          `${BASE_URL}/transactions/${transactionId}`
+        );
+        setTransaction(transactionRes.data);
+
+        const totalRes = await axios.get(
+          `${BASE_URL}/transactions/category-total?email=${encodeURIComponent(
+            userEmail
+          )}&category=${encodeURIComponent(transactionRes.data.category)}`
+        );
+        setCategoryTotal(totalRes.data.total || 0);
 
         setLoading(false);
       } catch (err) {
         console.error("Error fetching transaction:", err);
-        setError("Failed to load transaction. Please try again.");
+        setError("Failed to fetch transaction or category total.");
         setLoading(false);
       }
     };
 
     fetchTransaction();
-  }, [id]);
+  }, [transactionId, userEmail]);
 
   if (loading)
+    return <div className="text-center mt-10 text-gray-500">Loading...</div>;
+  if (error)
+    return <div className="text-center mt-10 text-red-500">{error}</div>;
+  if (!transaction)
     return (
-      <p className="text-center text-gray-500 mt-20">Loading transaction...</p>
+      <div className="text-center mt-10 text-gray-500">
+        No transaction found.
+      </div>
     );
-  if (error) return <p className="text-center text-red-500 mt-20">{error}</p>;
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl border border-gray-200">
-      <h2 className="text-2xl font-bold text-center mb-6 text-indigo-600">
-        Transaction Details
-      </h2>
+    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+      <h1 className="text-2xl font-bold mb-4">Transaction Details</h1>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div className="flex justify-between">
-          <span className="font-semibold text-gray-700">Type:</span>
-          <span className="text-gray-900 capitalize">{transaction.type}</span>
+          <span className="font-semibold">ID:</span>
+          <span>{transaction._id}</span>
         </div>
         <div className="flex justify-between">
-          <span className="font-semibold text-gray-700">Category:</span>
-          <span className="text-gray-900 capitalize">
-            {transaction.category}
+          <span className="font-semibold">Type:</span>
+          <span
+            className={
+              transaction.type === "income" ? "text-green-600" : "text-red-600"
+            }>
+            {transaction.type}
           </span>
         </div>
         <div className="flex justify-between">
-          <span className="font-semibold text-gray-700">Amount:</span>
-          <span className="text-gray-900">${transaction.amount}</span>
+          <span className="font-semibold">Category:</span>
+          <span>{transaction.category}</span>
         </div>
         <div className="flex justify-between">
-          <span className="font-semibold text-gray-700">Description:</span>
-          <span className="text-gray-900">{transaction.description}</span>
+          <span className="font-semibold">Amount:</span>
+          <span>${transaction.amount}</span>
         </div>
         <div className="flex justify-between">
-          <span className="font-semibold text-gray-700">Date:</span>
-          <span className="text-gray-900">
-            {new Date(transaction.date).toLocaleString()}
-          </span>
+          <span className="font-semibold">Description:</span>
+          <span>{transaction.description}</span>
         </div>
       </div>
 
-      <hr className="my-6 border-gray-300" />
+      <hr className="my-4 border-gray-300" />
 
-      <div className="text-center">
-        <p className="text-lg font-semibold text-indigo-600">
-          Total for this category:{" "}
-          <span className="text-gray-800">${categoryTotal}</span>
-        </p>
+      <div className="text-lg font-semibold">
+        Total spent in{" "}
+        <span className="text-blue-600">{transaction.category}</span>: $
+        {categoryTotal}
       </div>
     </div>
   );

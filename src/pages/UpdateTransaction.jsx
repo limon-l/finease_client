@@ -25,7 +25,9 @@ export default function UpdateTransaction() {
 
     const fetchTransaction = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/transactions/${id}`);
+        const res = await axios.get(
+          `https://finease-server-hmpp.onrender.com/transactions/${id}`
+        );
         if (res.data.email !== user.email) {
           toast.error("You cannot edit this transaction.");
           navigate("/my-transactions");
@@ -60,7 +62,10 @@ export default function UpdateTransaction() {
     e.preventDefault();
     setSubmitLoading(true);
     try {
-      await axios.put(`http://localhost:5000/transactions/${id}`, formData);
+      await axios.put(
+        `https://finease-server-hmpp.onrender.com/transactions/${id}`,
+        formData
+      );
       toast.success("Transaction updated successfully!");
       navigate(`/transaction/${id}`);
     } catch (err) {
@@ -78,7 +83,7 @@ export default function UpdateTransaction() {
     <div className="flex justify-center items-center min-h-[80vh]">
       <div className="card w-full max-w-md bg-base-100 shadow-xl p-6">
         <h2 className="text-center text-2xl font-semibold mb-6">
-          Update Transaction ✏️
+          Update Transaction
         </h2>
 
         <form onSubmit={handleUpdate} className="space-y-4">

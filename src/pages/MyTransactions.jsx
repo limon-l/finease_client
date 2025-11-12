@@ -16,7 +16,7 @@ export default function MyTransactions() {
     setLoading(true);
     try {
       const res = await axios.get(
-        `http://localhost:5000/transactions?email=${user.email}&sort=${sortBy}`
+        `https://finease-server-hmpp.onrender.com/transactions?email=${user.email}&sort=${sortBy}`
       );
 
       if (Array.isArray(res.data)) {
@@ -44,7 +44,9 @@ export default function MyTransactions() {
     if (!window.confirm("Are you sure you want to delete this transaction?"))
       return;
     try {
-      await axios.delete(`http://localhost:5000/transactions/${id}`);
+      await axios.delete(
+        `https://finease-server-hmpp.onrender.com/transactions/${id}`
+      );
       toast.success("Transaction deleted successfully!");
       setTransactions(transactions.filter((t) => t._id !== id));
     } catch (err) {
