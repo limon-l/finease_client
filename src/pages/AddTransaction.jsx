@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext1";
+import { useAuth } from "../context/AuthContext";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
@@ -45,9 +45,10 @@ export default function AddTransaction() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:5173/transactions",
+        "http://localhost:5000/transactions",
         dataToSend
       );
+
       if (res.data.insertedId) {
         toast.success("Transaction added successfully!");
         setFormData({
@@ -60,25 +61,34 @@ export default function AddTransaction() {
       }
     } catch (err) {
       toast.error("Failed to add transaction. Please try again.");
-      console.log(err);
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
+  const inputClass =
+    "input w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200";
+
+  const textareaClass =
+    "textarea w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200 resize-none";
+
+  const selectClass =
+    "select w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200";
+
   return (
-    <div className="flex justify-center items-center min-h-[80vh]">
-      <div className="card w-full max-w-md bg-base-100 shadow-xl p-6">
-        <h2 className="text-center text-2xl font-semibold mb-6">
+    <div className="min-h-[80vh] flex justify-center items-start py-10 px-4 bg-gray-50">
+      <div className="card w-full max-w-md bg-white shadow-md rounded-lg p-6">
+        <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">
           Add New Transaction
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex items-center justify-between">
-            <label className="font-medium">Type:</label>
+            <label className="font-medium text-gray-800">Type:</label>
             <select
               name="type"
-              className="select select-bordered w-1/2"
+              className={selectClass + " w-1/2 ms-3"}
               value={formData.type}
               onChange={handleChange}>
               <option value="income">Income</option>
@@ -87,10 +97,12 @@ export default function AddTransaction() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">Category:</label>
+            <label className="block font-medium mb-1 text-gray-800">
+              Category:
+            </label>
             <select
               name="category"
-              className="select select-bordered w-full"
+              className={selectClass}
               value={formData.category}
               onChange={handleChange}
               required>
@@ -105,51 +117,57 @@ export default function AddTransaction() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">Amount:</label>
+            <label className="block font-medium mb-1 text-gray-800">
+              Amount:
+            </label>
             <input
               type="number"
               name="amount"
-              className="input input-bordered w-full"
               placeholder="Enter amount"
               value={formData.amount}
               onChange={handleChange}
               required
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="block font-medium mb-1">Description:</label>
+            <label className="block font-medium mb-1 text-gray-800">
+              Description:
+            </label>
             <textarea
               name="description"
-              className="textarea textarea-bordered w-full"
               placeholder="Write details (optional)"
               value={formData.description}
               onChange={handleChange}
+              className={textareaClass}
             />
           </div>
 
           <div>
-            <label className="block font-medium mb-1">Date:</label>
+            <label className="block font-medium mb-1 text-gray-800">
+              Date:
+            </label>
             <input
               type="date"
               name="date"
-              className="input input-bordered w-full"
               value={formData.date}
               onChange={handleChange}
               required
+              className={inputClass}
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
             <input
               type="text"
-              className="input input-bordered w-full"
+              className={inputClass + " bg-gray-100"}
               value={user?.email || ""}
               readOnly
             />
             <input
               type="text"
-              className="input input-bordered w-full"
+              className={inputClass + " bg-gray-100"}
               value={user?.displayName || ""}
               readOnly
             />

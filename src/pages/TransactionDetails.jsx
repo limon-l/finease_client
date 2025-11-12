@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { useAuth } from "../context/AuthContext1";
+import { useAuth } from "../context/AuthContext";
 import { toast } from "react-hot-toast";
 
 export default function TransactionDetails() {
@@ -24,7 +24,6 @@ export default function TransactionDetails() {
         }
         setTransaction(res.data);
 
-        // fetch total amount for this category
         const catRes = await axios.get(
           `http://localhost:5173/transactions/category-total?email=${user.email}&category=${res.data.category}`
         );

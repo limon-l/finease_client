@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext1";
+import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { MdEmail } from "react-icons/md";

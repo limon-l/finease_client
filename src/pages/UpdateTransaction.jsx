@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { useAuth } from "../context/AuthContext1";
+import { useAuth } from "../context/AuthContext";
 
 export default function UpdateTransaction() {
   const { id } = useParams();
@@ -82,7 +82,6 @@ export default function UpdateTransaction() {
         </h2>
 
         <form onSubmit={handleUpdate} className="space-y-4">
-
           <div className="flex items-center justify-between">
             <label className="font-medium">Type:</label>
             <select

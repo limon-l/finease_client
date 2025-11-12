@@ -1,19 +1,23 @@
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext1";
+import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const Register = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const { register, googleLogin } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(email, password);
+      await register(name, email, password);
       toast.success("Registered successfully!");
       navigate("/");
     } catch (error) {
@@ -40,6 +44,17 @@ const Register = () => {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
+            <label className="block text-gray-300 text-sm mb-1">Name</label>
+            <input
+              type="text"
+              placeholder="Enter your full name"
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:ring-2 focus:ring-green-500 outline-none transition"
+            />
+          </div>
+
+          <div>
             <label className="block text-gray-300 text-sm mb-1">Email</label>
             <input
               type="email"
@@ -50,15 +65,24 @@ const Register = () => {
             />
           </div>
 
-          <div>
+          <div className="relative">
             <label className="block text-gray-300 text-sm mb-1">Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:ring-2 focus:ring-green-500 outline-none transition"
+              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:ring-2 focus:ring-green-500 outline-none transition pr-10"
             />
+            <span
+              className="absolute right-3 top-10 text-gray-300 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? (
+                <AiFillEyeInvisible size={20} />
+              ) : (
+                <AiFillEye size={20} />
+              )}
+            </span>
           </div>
 
           <button
