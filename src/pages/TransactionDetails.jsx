@@ -10,36 +10,42 @@ const TransactionDetails = ({ transactionId, userEmail }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!transactionId || !userEmail) return;
-
     const fetchTransaction = async () => {
       try {
         setLoading(true);
-        setError("");
+        console.log("Fetching transaction id:", transactionId);
 
-        const { data: transactionData } = await axios.get(
-          `${BASE_URL}/transactions/${transactionId}`,
-          { withCredentials: true }
-        );
-        setTransaction(transactionData);
+        axios
+          .get(`${BASE_URL}/transactions/${transactionId}`)
+          .then((res) => {
+            console.log("Transaction response:", res.data);
+            setTransaction(res.data);
 
-        const { data: totalData } = await axios.get(
-          `${BASE_URL}/transactions/category-total?email=${encodeURIComponent(
-            userEmail
-          )}&category=${encodeURIComponent(transactionData.category)}`,
-          { withCredentials: true }
-        );
-        setCategoryTotal(totalData.total || 0);
+            axios
+              .get(
+                `${BASE_URL}/transactions/category-total?email=${encodeURIComponent(
+                  userEmail
+                )}&category=${encodeURIComponent(res.data.category)}`
+              )
+              .then((totalRes) => {
+                console.log("Category total response:", totalRes.data);
+                setCategoryTotal(totalRes.data.total || 0);
+                setLoading(false);
+              })
+              .catch((err) => {
+                console.error("Category total error:", err);
+                setError("Failed to fetch category total.");
+                setLoading(false);
+              });
+          })
+          .catch((err) => {
+            console.error("Transaction error:", err);
+            setError("Failed to fetch transaction.");
+            setLoading(false);
+          });
       } catch (err) {
-        console.error("Error fetching transaction or category total:", err);
-        if (err.response) {
-          setError(err.response.data.message || "Server error occurred");
-        } else if (err.request) {
-          setError("Network error: Unable to reach server");
-        } else {
-          setError("Unexpected error occurred");
-        }
-      } finally {
+        console.error("Unexpected error:", err);
+        setError("Unexpected error occurred.");
         setLoading(false);
       }
     };
