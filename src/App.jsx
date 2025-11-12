@@ -12,6 +12,7 @@ import MyTransactions from "./pages/MyTransactions";
 import Reports from "./pages/Reports";
 import TransactionDetails from "./pages/TransactionDetails";
 import UpdateTransaction from "./pages/UpdateTransaction";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
 
           <Route
             path="/my-transactions"

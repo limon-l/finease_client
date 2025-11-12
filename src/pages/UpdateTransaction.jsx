@@ -82,7 +82,7 @@ export default function UpdateTransaction() {
         </h2>
 
         <form onSubmit={handleUpdate} className="space-y-4">
-          {/* Type */}
+
           <div className="flex items-center justify-between">
             <label className="font-medium">Type:</label>
             <select
@@ -95,7 +95,6 @@ export default function UpdateTransaction() {
             </select>
           </div>
 
-          {/* Category */}
           <div>
             <label className="block font-medium mb-1">Category:</label>
             <select
@@ -114,7 +113,6 @@ export default function UpdateTransaction() {
             </select>
           </div>
 
-          {/* Amount */}
           <div>
             <label className="block font-medium mb-1">Amount:</label>
             <input
@@ -127,7 +125,6 @@ export default function UpdateTransaction() {
             />
           </div>
 
-          {/* Description */}
           <div>
             <label className="block font-medium mb-1">Description:</label>
             <textarea
@@ -138,7 +135,6 @@ export default function UpdateTransaction() {
             />
           </div>
 
-          {/* Date */}
           <div>
             <label className="block font-medium mb-1">Date:</label>
             <input

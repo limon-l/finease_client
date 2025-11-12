@@ -1,83 +1,92 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext1";
+import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
-export default function Register() {
-  const [name, setName] = useState("");
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { register, loginWithGoogle } = useAuth();
+  const { register, googleLogin } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(name, email, password);
-      toast.success("Account created successfully!");
+      await register(email, password);
+      toast.success("Registered successfully!");
       navigate("/");
-    } catch (err) {
-      toast.error(err.message);
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogle = async () => {
     try {
-      await loginWithGoogle();
-      toast.success("Logged in with Google!");
+      await googleLogin();
+      toast.success("Signed in with Google!");
       navigate("/");
-    } catch (err) {
-      toast.error(err.message);
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh] bg-gradient-to-r from-green-100 to-teal-100">
-      <div className="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center mb-6">Create Account</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="input input-bordered w-full"
-            required
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="input input-bordered w-full"
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="input input-bordered w-full"
-            required
-          />
-          <button type="submit" className="btn btn-primary w-full">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-black via-gray-900 to-black px-4 py-8">
+      <div className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-2xl p-10 w-full max-w-md text-white">
+        <h2 className="text-3xl font-semibold text-center mb-6 bg-linear-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
+          Create Your Account
+        </h2>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div>
+            <label className="block text-gray-300 text-sm mb-1">Email</label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:ring-2 focus:ring-green-500 outline-none transition"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-300 text-sm mb-1">Password</label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:ring-2 focus:ring-green-500 outline-none transition"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-3 bg-linear-to-r from-green-500 to-emerald-600 rounded-lg font-semibold text-white shadow-lg hover:opacity-90 transition-transform transform hover:scale-[1.02]">
             Register
           </button>
+
+          <button
+            type="button"
+            onClick={handleGoogle}
+            className="flex items-center justify-center w-full gap-2 py-3 border border-gray-600 rounded-lg text-gray-200 hover:bg-gray-800 transition">
+            <FcGoogle className="text-xl" />
+            Sign up with Google
+          </button>
         </form>
-        <div className="divider">OR</div>
-        <button
-          onClick={handleGoogleLogin}
-          className="btn btn-outline btn-primary w-full flex items-center justify-center gap-2">
-          <FcGoogle size={24} /> Continue with Google
-        </button>
-        <p className="mt-4 text-center text-sm">
+
+        <p className="text-center text-gray-400 text-sm pt-6">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-500">
+          <Link
+            to="/login"
+            className="text-green-400 hover:text-green-300 font-medium">
             Login
           </Link>
         </p>
       </div>
     </div>
   );
-}
+};
+
+export default Register;
