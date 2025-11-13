@@ -1,4 +1,3 @@
-// src/context/AuthContext.jsx
 import React, { createContext, useEffect, useState, useContext } from "react";
 import {
   GoogleAuthProvider,
@@ -77,7 +76,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+      setTimeout(() => setLoading(false), 300);
     });
     return () => unsubscribe();
   }, []);

@@ -58,7 +58,7 @@ export default function MyTransactions() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-[80vh] px-4 py-10 bg-gray-50">
+    <div className="min-h-[80vh] px-4 py-3 md:py-10 bg-gray-50">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">

@@ -44,7 +44,7 @@ export default function Profile() {
   if (!user) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-[80vh] flex justify-center items-start py-10 px-4 bg-gray-50">
+    <div className="min-h-[80vh] flex justify-center items-start py-3 md:py-10 px-4 bg-gray-50">
       <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
           My Profile
