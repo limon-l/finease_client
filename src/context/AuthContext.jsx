@@ -74,7 +74,6 @@ export const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser, { displayName: name, photoURL });
   };
 
-  // Firebase auth state persistence
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);

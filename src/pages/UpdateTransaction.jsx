@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -33,6 +33,7 @@ export default function UpdateTransaction() {
           navigate("/my-transactions");
           return;
         }
+
         setFormData({
           type: res.data.type,
           category: res.data.category,
@@ -41,8 +42,7 @@ export default function UpdateTransaction() {
           date: new Date(res.data.date).toISOString().split("T")[0],
         });
       } catch (err) {
-        console.log(err);
-
+        console.error(err);
         toast.error("Failed to fetch transaction.");
         navigate("/my-transactions");
       } finally {
@@ -51,7 +51,7 @@ export default function UpdateTransaction() {
     };
 
     fetchTransaction();
-  }, [id, user]);
+  }, [id, user, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,8 +69,7 @@ export default function UpdateTransaction() {
       toast.success("Transaction updated successfully!");
       navigate(`/transaction/${id}`);
     } catch (err) {
-      console.log(err);
-
+      console.error(err);
       toast.error("Failed to update transaction.");
     } finally {
       setSubmitLoading(false);
@@ -80,7 +79,7 @@ export default function UpdateTransaction() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh]">
+    <div className="flex justify-center items-center min-h-[80vh] px-4">
       <div className="card w-full max-w-md bg-base-100 shadow-xl p-6">
         <h2 className="text-center text-2xl font-semibold mb-6">
           Update Transaction
@@ -158,6 +157,14 @@ export default function UpdateTransaction() {
             {submitLoading ? "Updating..." : "Update Transaction"}
           </button>
         </form>
+
+        <div className="text-center mt-4">
+          <Link
+            to={`/transaction/${id}`}
+            className="text-indigo-600 hover:text-indigo-800 font-medium">
+            ← Back to Transaction Details
+          </Link>
+        </div>
       </div>
     </div>
   );

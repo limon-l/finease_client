@@ -70,25 +70,25 @@ export default function AddTransaction() {
   };
 
   const inputClass =
-    "input w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200";
+    "input w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 rounded-md";
   const textareaClass =
-    "textarea w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200 resize-none";
+    "textarea w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 resize-none rounded-md";
   const selectClass =
-    "select w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200";
+    "select w-full bg-gray-100 text-gray-900 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 rounded-md";
 
   return (
     <div className="min-h-[80vh] flex justify-center items-start py-10 px-4 bg-gray-50">
-      <div className="card w-full max-w-md bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">
+      <div className="w-full max-w-[1200px] mx-auto bg-white shadow-lg rounded-xl p-8 md:p-12">
+        <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
           Add New Transaction
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex items-center justify-between">
-            <label className="font-medium text-gray-800">Type:</label>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center md:gap-6">
+            <label className="font-medium text-gray-800 md:w-1/4">Type:</label>
             <select
               name="type"
-              className={selectClass + " w-1/2 ms-3"}
+              className={selectClass + " md:w-1/2"}
               value={formData.type}
               onChange={handleChange}>
               <option value="income">Income</option>
@@ -96,13 +96,13 @@ export default function AddTransaction() {
             </select>
           </div>
 
-          <div>
-            <label className="block font-medium mb-1 text-gray-800">
+          <div className="flex flex-col md:flex-row md:items-center md:gap-6">
+            <label className="font-medium text-gray-800 md:w-1/4">
               Category:
             </label>
             <select
               name="category"
-              className={selectClass}
+              className={selectClass + " md:w-1/2"}
               value={formData.category}
               onChange={handleChange}
               required>
@@ -116,8 +116,8 @@ export default function AddTransaction() {
             </select>
           </div>
 
-          <div>
-            <label className="block font-medium mb-1 text-gray-800">
+          <div className="flex flex-col md:flex-row md:items-center md:gap-6">
+            <label className="font-medium text-gray-800 md:w-1/4">
               Amount:
             </label>
             <input
@@ -127,12 +127,12 @@ export default function AddTransaction() {
               value={formData.amount}
               onChange={handleChange}
               required
-              className={inputClass}
+              className={inputClass + " md:w-1/2"}
             />
           </div>
 
-          <div>
-            <label className="block font-medium mb-1 text-gray-800">
+          <div className="flex flex-col md:flex-row md:items-start md:gap-6">
+            <label className="font-medium text-gray-800 md:w-1/4">
               Description:
             </label>
             <textarea
@@ -140,34 +140,32 @@ export default function AddTransaction() {
               placeholder="Write details (optional)"
               value={formData.description}
               onChange={handleChange}
-              className={textareaClass}
+              className={textareaClass + " md:w-1/2"}
             />
           </div>
 
-          <div>
-            <label className="block font-medium mb-1 text-gray-800">
-              Date:
-            </label>
+          <div className="flex flex-col md:flex-row md:items-center md:gap-6">
+            <label className="font-medium text-gray-800 md:w-1/4">Date:</label>
             <input
               type="date"
               name="date"
               value={formData.date}
               onChange={handleChange}
               required
-              className={inputClass}
+              className={inputClass + " md:w-1/2"}
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input
               type="text"
-              className={inputClass + " bg-gray-100"}
+              className={inputClass + " bg-gray-100 cursor-not-allowed"}
               value={user?.email || ""}
               readOnly
             />
             <input
               type="text"
-              className={inputClass + " bg-gray-100"}
+              className={inputClass + " bg-gray-100 cursor-not-allowed"}
               value={user?.displayName || ""}
               readOnly
             />
@@ -176,7 +174,7 @@ export default function AddTransaction() {
           <button
             type="submit"
             disabled={loading}
-            className="btn btn-primary w-full mt-4">
+            className="btn btn-primary w-full py-3 text-lg font-semibold mt-2">
             {loading ? "Adding..." : "Add Transaction"}
           </button>
         </form>

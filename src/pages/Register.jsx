@@ -18,39 +18,40 @@ const Register = () => {
     e.preventDefault();
     try {
       await register(name, email, password);
-      toast.success("Registered successfully!");
+      toast.success("✅ Registered successfully!");
       navigate("/");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(`❌ ${error.message}`);
     }
   };
 
   const handleGoogle = async () => {
     try {
       await googleLogin();
-      toast.success("Signed in with Google!");
+      toast.success("✅ Signed in with Google!");
       navigate("/");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(`❌ ${error.message}`);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-black via-gray-900 to-black px-4 py-8">
       <div className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-2xl p-10 w-full max-w-md text-white">
-        <h2 className="text-3xl font-semibold text-center mb-6 bg-linear-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold text-center mb-6 bg-linear-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
           Create Your Account
         </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div>
             <label className="block text-gray-300 text-sm mb-1">Name</label>
             <input
               type="text"
               placeholder="Enter your full name"
+              value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:ring-2 focus:ring-green-500 outline-none transition"
+              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition"
             />
           </div>
 
@@ -59,9 +60,10 @@ const Register = () => {
             <input
               type="email"
               placeholder="Enter your email"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:ring-2 focus:ring-green-500 outline-none transition"
+              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition"
             />
           </div>
 
@@ -70,9 +72,10 @@ const Register = () => {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:ring-2 focus:ring-green-500 outline-none transition pr-10"
+              className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition pr-10"
             />
             <span
               className="absolute right-3 top-10 text-gray-300 cursor-pointer"
@@ -87,7 +90,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full py-3 bg-linear-to-r from-green-500 to-emerald-600 rounded-lg font-semibold text-white shadow-lg hover:opacity-90 transition-transform transform hover:scale-[1.02]">
+            className="w-full py-3 bg-yellow-400 text-gray-900 font-semibold rounded-lg shadow-lg hover:bg-yellow-500 hover:scale-[1.02] transition-transform">
             Register
           </button>
 
@@ -104,7 +107,7 @@ const Register = () => {
           Already have an account?{" "}
           <Link
             to="/login"
-            className="text-green-400 hover:text-green-300 font-medium">
+            className="text-yellow-400 hover:text-yellow-300 font-medium">
             Login
           </Link>
         </p>

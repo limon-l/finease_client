@@ -32,9 +32,10 @@ export default function Profile() {
         displayName: formData.name,
         photoURL: formData.photoURL,
       });
-      toast.success("Profile updated successfully!");
+      toast.success("✅ Profile updated successfully!");
     } catch (err) {
-      toast.error("Failed to update profile.", err);
+      toast.error("❌ Failed to update profile.");
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -43,27 +44,29 @@ export default function Profile() {
   if (!user) return <LoadingSpinner />;
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh]">
-      <div className="card w-full max-w-md bg-base-100 shadow-xl p-6">
-        <h2 className="text-center text-2xl font-semibold mb-6">
-          My Profile 👤
+    <div className="min-h-[80vh] flex justify-center items-start py-10 px-4 bg-gray-50">
+      <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8">
+        <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
+          My Profile
         </h2>
 
-        <form onSubmit={handleUpdate} className="space-y-4">
+        <form onSubmit={handleUpdate} className="space-y-5">
           <div className="flex justify-center">
             <img
               src={formData.photoURL || "https://www.gravatar.com/avatar/?d=mp"}
               alt="Profile"
-              className="w-24 h-24 rounded-full mb-4"
+              className="w-28 h-28 rounded-full border-4 border-yellow-400 shadow-lg"
             />
           </div>
 
           <div>
-            <label className="block font-medium mb-1">Name:</label>
+            <label className="block font-medium mb-1 text-gray-700">
+              Name:
+            </label>
             <input
               type="text"
               name="name"
-              className="input input-bordered w-full"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition"
               value={formData.name}
               onChange={handleChange}
               required
@@ -71,21 +74,25 @@ export default function Profile() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">Photo URL:</label>
+            <label className="block font-medium mb-1 text-gray-700">
+              Photo URL:
+            </label>
             <input
               type="text"
               name="photoURL"
-              className="input input-bordered w-full"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition"
               value={formData.photoURL}
               onChange={handleChange}
             />
           </div>
 
           <div>
-            <label className="block font-medium mb-1">Email:</label>
+            <label className="block font-medium mb-1 text-gray-700">
+              Email:
+            </label>
             <input
               type="email"
-              className="input input-bordered w-full"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 text-gray-700 cursor-not-allowed"
               value={user.email}
               readOnly
             />
@@ -94,7 +101,7 @@ export default function Profile() {
           <button
             type="submit"
             disabled={loading}
-            className="btn btn-primary w-full mt-4">
+            className="w-full py-3 bg-yellow-400 text-gray-900 font-semibold rounded-lg shadow-lg hover:bg-yellow-500 transition-transform transform hover:scale-[1.02]">
             {loading ? "Updating..." : "Update Profile"}
           </button>
         </form>
