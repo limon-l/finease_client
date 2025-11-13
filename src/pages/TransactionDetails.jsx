@@ -15,64 +15,64 @@ const TransactionDetails = ({ transactionId, userEmail }) => {
         setLoading(true);
         console.log("Fetching transaction id:", transactionId);
 
-        axios
-          .get(`${BASE_URL}/transactions/${transactionId}`)
-          .then((res) => {
-            console.log("Transaction response:", res.data);
-            setTransaction(res.data);
+        const transactionRes = await axios.get(
+          `${BASE_URL}/transactions/${transactionId}`
+        );
+        console.log("Transaction response:", transactionRes.data);
 
-            axios
-              .get(
-                `${BASE_URL}/transactions/category-total?email=${encodeURIComponent(
-                  userEmail
-                )}&category=${encodeURIComponent(res.data.category)}`
-              )
-              .then((totalRes) => {
-                console.log("Category total response:", totalRes.data);
-                setCategoryTotal(totalRes.data.total || 0);
-                setLoading(false);
-              })
-              .catch((err) => {
-                console.error("Category total error:", err);
-                setError("Failed to fetch category total.");
-                setLoading(false);
-              });
-          })
-          .catch((err) => {
-            console.error("Transaction error:", err);
-            setError("Failed to fetch transaction.");
-            setLoading(false);
-          });
+        setTransaction(transactionRes.data);
+
+        const categoryRes = await axios.get(
+          `${BASE_URL}/transactions/category-total`,
+          {
+            params: {
+              email: userEmail,
+              category: transactionRes.data.category,
+            },
+          }
+        );
+
+        console.log("Category total response:", categoryRes.data);
+        setCategoryTotal(categoryRes.data.total || 0);
       } catch (err) {
-        console.error("Unexpected error:", err);
-        setError("Unexpected error occurred.");
+        console.error("Error fetching transaction details:", err);
+        setError("Failed to fetch transaction details.");
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchTransaction();
+    if (transactionId && userEmail) {
+      fetchTransaction();
+    } else {
+      setError("Invalid transaction ID or user email.");
+      setLoading(false);
+    }
   }, [transactionId, userEmail]);
 
-  if (loading)
+  if (loading) {
     return (
       <div className="text-center mt-20 text-gray-500 text-lg">Loading...</div>
     );
+  }
 
-  if (error)
+  if (error) {
     return (
       <div className="text-center mt-20 text-red-500 text-lg">{error}</div>
     );
+  }
 
-  if (!transaction)
+  if (!transaction) {
     return (
       <div className="text-center mt-20 text-gray-500 text-lg">
         Transaction not found.
       </div>
     );
+  }
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-      <h1 className="text-3xl font-bold mb-6 text-center">
+      <h1 className="text-3xl font-bold mb-6 text-center text-indigo-700">
         Transaction Details
       </h1>
 
@@ -87,7 +87,7 @@ const TransactionDetails = ({ transactionId, userEmail }) => {
         />
         <DetailRow label="Category" value={transaction.category} />
         <DetailRow label="Amount" value={`$${transaction.amount}`} />
-        <DetailRow label="Description" value={transaction.description} />
+        <DetailRow label="Description" value={transaction.description || "—"} />
       </div>
 
       <hr className="my-6 border-gray-300" />
