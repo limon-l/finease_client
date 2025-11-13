@@ -90,14 +90,14 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full py-3 bg-yellow-400 text-gray-900 font-semibold rounded-lg shadow-lg hover:bg-yellow-500 hover:scale-[1.02] transition-transform">
+            className="w-full py-3 bg-yellow-400 text-gray-900 font-semibold rounded-lg shadow-lg hover:bg-yellow-500 hover:scale-[1.02] transition-transform cursor-pointer">
             Register
           </button>
 
           <button
             type="button"
             onClick={handleGoogle}
-            className="flex items-center justify-center w-full gap-2 py-3 border border-gray-600 rounded-lg text-gray-200 hover:bg-gray-800 transition">
+            className="flex items-center justify-center w-full gap-2 py-3 border border-gray-600 rounded-lg text-gray-200 hover:bg-gray-800 transition cursor-pointer">
             <FcGoogle className="text-xl" />
             Sign up with Google
           </button>
@@ -107,7 +107,7 @@ const Register = () => {
           Already have an account?{" "}
           <Link
             to="/login"
-            className="text-yellow-400 hover:text-yellow-300 font-medium">
+            className="text-yellow-400 hover:text-yellow-300 font-medium cursor-pointer">
             Login
           </Link>
         </p>

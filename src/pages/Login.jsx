@@ -64,7 +64,7 @@ const Login = () => {
               className="w-full px-4 py-3 rounded-lg bg-black/30 text-white border border-gray-700 focus:ring-2 focus:ring-green-500 outline-none transition pr-10"
             />
             <span
-              className="absolute right-3 top-3 text-gray-300 cursor-pointer"
+              className="absolute right-3 top-9 text-gray-300 cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? (
                 <AiFillEyeInvisible size={22} />
@@ -76,14 +76,14 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full py-3 bg-linear-to-r from-green-500 to-emerald-600 rounded-lg font-semibold text-white shadow-lg hover:opacity-95 transition-transform transform hover:scale-[1.02]">
+            className="w-full py-3 bg-linear-to-r from-green-500 to-emerald-600 rounded-lg font-semibold text-white shadow-lg hover:opacity-95 transition-transform transform hover:scale-[1.02] cursor-pointer">
             Login
           </button>
 
           <button
             type="button"
             onClick={handleGoogle}
-            className="flex items-center justify-center w-full gap-3 py-3 border border-gray-600 rounded-lg text-gray-200 hover:bg-gray-800 transition">
+            className="flex items-center justify-center w-full gap-3 py-3 border border-gray-600 rounded-lg text-gray-200 hover:bg-gray-800 transition cursor-pointer">
             <FcGoogle className="text-2xl" />
             Sign in with Google
           </button>
@@ -92,14 +92,14 @@ const Login = () => {
         <div className="flex flex-col md:flex-row justify-between mt-6 text-sm text-gray-400 gap-3">
           <Link
             to="/forgot-password"
-            className="hover:text-green-400 transition">
+            className="hover:text-green-400 transition cursor-pointer">
             Forgot Password?
           </Link>
           <p>
             Don’t have an account?{" "}
             <Link
               to="/register"
-              className="text-green-400 hover:text-green-300 font-medium">
+              className="text-green-400 hover:text-green-300 font-medium cursor-pointer">
               Sign up
             </Link>
           </p>
