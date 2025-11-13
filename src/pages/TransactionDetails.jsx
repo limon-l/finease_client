@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const BASE_URL = "https://finease-server-hmpp.onrender.com";
 
-const TransactionDetails = ({ transactionId, userEmail }) => {
+const TransactionDetails = () => {
+  const { id } = useParams();
+  const { user } = useAuth();
   const [transaction, setTransaction] = useState(null);
   const [categoryTotal, setCategoryTotal] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -13,27 +17,29 @@ const TransactionDetails = ({ transactionId, userEmail }) => {
     const fetchTransaction = async () => {
       try {
         setLoading(true);
-        console.log("Fetching transaction id:", transactionId);
+        console.log("Fetching transaction id:", id);
 
         const transactionRes = await axios.get(
-          `${BASE_URL}/transactions/${transactionId}`
+          `${BASE_URL}/transactions/${id}`
         );
         console.log("Transaction response:", transactionRes.data);
 
         setTransaction(transactionRes.data);
 
-        const categoryRes = await axios.get(
-          `${BASE_URL}/transactions/category-total`,
-          {
-            params: {
-              email: userEmail,
-              category: transactionRes.data.category,
-            },
-          }
-        );
+        if (user?.email && transactionRes.data.category) {
+          const categoryRes = await axios.get(
+            `${BASE_URL}/transactions/category-total`,
+            {
+              params: {
+                email: user.email,
+                category: transactionRes.data.category,
+              },
+            }
+          );
 
-        console.log("Category total response:", categoryRes.data);
-        setCategoryTotal(categoryRes.data.total || 0);
+          console.log("Category total response:", categoryRes.data);
+          setCategoryTotal(categoryRes.data.total || 0);
+        }
       } catch (err) {
         console.error("Error fetching transaction details:", err);
         setError("Failed to fetch transaction details.");
@@ -42,13 +48,12 @@ const TransactionDetails = ({ transactionId, userEmail }) => {
       }
     };
 
-    if (transactionId && userEmail) {
-      fetchTransaction();
-    } else {
-      setError("Invalid transaction ID or user email.");
+    if (id) fetchTransaction();
+    else {
+      setError("Invalid transaction ID.");
       setLoading(false);
     }
-  }, [transactionId, userEmail]);
+  }, [id, user]);
 
   if (loading) {
     return (
@@ -88,6 +93,10 @@ const TransactionDetails = ({ transactionId, userEmail }) => {
         <DetailRow label="Category" value={transaction.category} />
         <DetailRow label="Amount" value={`$${transaction.amount}`} />
         <DetailRow label="Description" value={transaction.description || "—"} />
+        <DetailRow
+          label="Date"
+          value={new Date(transaction.date).toLocaleDateString()}
+        />
       </div>
 
       <hr className="my-6 border-gray-300" />
