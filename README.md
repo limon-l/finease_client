@@ -158,7 +158,6 @@ npm start
 
 **Your Name**
 📧 Email: [limonroyapu.edu@gmail.com](mailto:limonroyapu.edu@gmail.com)
-🌐 Portfolio: your-portfolio-link
 🐙 GitHub: https://www.github.com/limon-l
 
 ---
