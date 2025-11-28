@@ -156,7 +156,7 @@ npm start
 
 ## 👨‍💻 **Developer**
 
-**Your Name**
+**Limon Roy Apu**
 📧 Email: [limonroyapu.edu@gmail.com](mailto:limonroyapu.edu@gmail.com)
 🐙 GitHub: https://www.github.com/limon-l
 
